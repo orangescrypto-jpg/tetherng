@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tetherng - Contact Agent</title>
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         .contact-wrapper {
             max-width: 700px;
@@ -101,6 +102,11 @@
             background: #1E3A8A;
         }
 
+        .btn-submit:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
         .back-link {
             display: inline-block;
             margin-top: 1rem;
@@ -111,6 +117,14 @@
 
         .back-link:hover {
             color: #1D4ED8;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 1rem;
+            color: #1D4ED8;
+            font-size: 0.875rem;
         }
 
         @media (max-width: 640px) {
@@ -145,7 +159,6 @@
 
             <div class="contact-body">
                 <div class="property-info" id="propertyInfo">
-                    <!-- Property info loaded by JavaScript -->
                     <p>Loading property details...</p>
                 </div>
 
@@ -170,7 +183,8 @@
                         <textarea id="message" rows="5" placeholder="I'm interested in this property. I would like to schedule a viewing..." required></textarea>
                     </div>
 
-                    <button type="submit" class="btn-submit">📤 Send Message to Agent</button>
+                    <button type="submit" class="btn-submit" id="submitBtn">📤 Send Message</button>
+                    <div class="loading" id="loading">Sending message... Please wait</div>
                     <a href="javascript:history.back()" class="back-link">← Back to Property</a>
                 </form>
             </div>
@@ -203,6 +217,9 @@
     </footer>
 
     <script>
+        // Initialize EmailJS with your public key
+        emailjs.init("zLeW585vOYs5W__9I");
+        
         // Get property ID from URL
         const urlParams = new URLSearchParams(window.location.search);
         const propertyId = parseInt(urlParams.get('id'));
@@ -242,7 +259,6 @@
                 <p>📍 ${property.location}</p>
                 <p>💰 ${property.price}</p>
                 <p style="margin-top: 0.5rem;">👔 Agent: ${property.agentName || 'Verified Agent'}</p>
-                <p>📧 Agent Email: ${property.agentEmail || 'Not provided'}</p>
             `;
         } else {
             document.getElementById('propertyInfo').innerHTML = `<p>❌ Property information not available.</p>`;
@@ -259,8 +275,10 @@
         
         // Form submission
         const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
         
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const senderName = document.getElementById('senderName').value.trim();
@@ -284,12 +302,15 @@
                 propertyId: propertyId,
                 propertyTitle: property ? property.title : 'Unknown',
                 propertyLocation: property ? property.location : 'Unknown',
+                propertyPrice: property ? property.price : 'Unknown',
                 senderName: senderName,
                 senderEmail: senderEmail,
                 senderPhone: senderPhone,
                 message: message,
+                agentName: property ? property.agentName : 'Agent',
                 agentEmail: property ? property.agentEmail : null,
                 status: 'pending',
+                read: false,
                 createdAt: new Date().toISOString()
             };
             
@@ -298,12 +319,42 @@
             allInquiries.push(inquiry);
             localStorage.setItem('tetherng_inquiries', JSON.stringify(allInquiries));
             
-            alert(`✅ Message Sent Successfully!\n\nThank you ${senderName}.\n\nThe agent will contact you within 24 hours.\n\nReference ID: #${inquiry.id}`);
+            // Send email via EmailJS
+            if (property && property.agentEmail) {
+                submitBtn.disabled = true;
+                loading.style.display = 'block';
+                
+                const templateParams = {
+                    agentName: property.agentName || 'Agent',
+                    propertyTitle: property.title,
+                    propertyLocation: property.location,
+                    propertyPrice: property.price,
+                    tenantName: senderName,
+                    tenantEmail: senderEmail,
+                    tenantPhone: senderPhone || 'Not provided',
+                    message: message
+                };
+                
+                try {
+                    await emailjs.send(
+                        'service_ps89nqa',  // Your Service ID
+                        'template_927ls7j', // Your Template ID
+                        templateParams
+                    );
+                    console.log('✅ Email sent successfully!');
+                } catch (error) {
+                    console.error('❌ Email failed:', error);
+                    // Email failed but inquiry is still saved
+                }
+                
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+            }
             
-            // Clear form or redirect
+            alert(`✅ Message Sent Successfully!\n\nThank you ${senderName}.\n\nThe agent will contact you within 24 hours.\n\nA notification has been sent to the agent.`);
+            
             form.reset();
             
-            // Redirect back to property detail after 2 seconds
             setTimeout(() => {
                 window.location.href = `property-detail.html?id=${propertyId}`;
             }, 2000);
