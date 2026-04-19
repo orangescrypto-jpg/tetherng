@@ -385,9 +385,9 @@
                         </div>
                         
                         <div class="action-buttons">
-                            <button class="btn-contact" onclick="contactAgent('${property.agentEmail || 'hello@tetherng.com'}')">
+                            <a href="contact-agent.html?id=${property.id}" class="btn-contact">
                                 📞 Contact Agent
-                            </button>
+                            </a>
                             <button class="btn-save" onclick="saveProperty(${property.id})">
                                 ❤️ Save Property
                             </button>
@@ -397,12 +397,7 @@
             `;
         }
         
-        // Contact agent function
-        window.contactAgent = function(email) {
-            alert(`📞 Contact Agent\n\nEmail: ${email}\nPhone: 0800-TETHERNG\n\nOur team will connect you with the agent within 24 hours.\n\n(Full messaging system coming soon!)`);
-        };
-        
-        // Save property function (for tenants) - UPDATED to work with tenant accounts
+        // Save property function (for tenants)
         window.saveProperty = function(id) {
             // Check if tenant is logged in
             const currentTenant = localStorage.getItem('tetherng_current_tenant');
