@@ -130,27 +130,22 @@
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">🏠 Tether<span>ng</span></a>
             <div class="nav-links">
                 <a href="index.html">Find Property</a>
                 <a href="agent-signup.html">List Property</a>
-                <div class="nav-links" style="display: flex; gap: 1rem;">
-                    <a href="tenant-signin.html">Tenant Sign In</a>
-                    <a href="signin.html" class="btn-outline">Agent Sign In</a>
-                </div>
+                <a href="tenant-signin.html" class="btn-outline">Sign In</a>
             </div>
         </div>
     </nav>
 
-    <!-- Signup Form -->
     <div class="signup-wrapper">
         <div class="signup-card">
             <div class="signup-header">
-                <h1>🏠 Find Your Dream Home</h1>
-                <p>Create a free tenant account to save favorite properties</p>
+                <h1>🏠 Create Free Account</h1>
+                <p>Save your favorite properties and find your dream home</p>
             </div>
 
             <div class="signup-body">
@@ -209,7 +204,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -260,7 +254,6 @@
                 return;
             }
             
-            // Check if email already exists
             const existingTenant = localStorage.getItem('tetherng_tenant_' + email);
             if (existingTenant) {
                 alert('❌ An account with this email already exists. Please sign in instead.');
@@ -268,7 +261,6 @@
                 return;
             }
             
-            // Save tenant data
             const tenantData = {
                 fullName,
                 email,
@@ -280,13 +272,11 @@
             
             localStorage.setItem('tetherng_tenant_' + email, JSON.stringify(tenantData));
             
-            alert(`✅ Welcome to Tetherng, ${fullName}!\n\nYour account has been created successfully.\n\nYou can now save properties you love and find your dream home!`);
+            alert(`✅ Welcome to Tetherng, ${fullName}!\n\nYour account has been created successfully.\n\nYou can now save properties you love!`);
             
-            // Clear form and redirect to sign in
             window.location.href = 'tenant-signin.html';
         });
         
-        // Phone number formatting
         const phoneInput = document.getElementById('phone');
         phoneInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
