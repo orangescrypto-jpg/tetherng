@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tetherng - Agent Sign Up | Become a Verified Agent</title>
+    <title>Tetherng - Become a Verified Agent</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Additional styles specific to signup page */
-        .signup-container {
-            max-width: 500px;
-            margin: 3rem auto;
+        /* Signup page specific styles */
+        .signup-wrapper {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: #f9fafb;
+        }
+
+        .signup-card {
+            max-width: 550px;
+            width: 100%;
             background: white;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
@@ -33,12 +42,29 @@
             font-size: 0.9rem;
         }
 
-        .signup-form {
+        .signup-body {
             padding: 2rem;
         }
 
-        .form-group {
+        .verification-badge {
+            background: #fef3c7;
+            border-left: 4px solid #F59E0B;
+            padding: 1rem;
+            border-radius: 0.5rem;
             margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: #92400e;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
         }
 
         .form-group label {
@@ -46,16 +72,18 @@
             margin-bottom: 0.5rem;
             font-weight: 600;
             color: #1f2937;
+            font-size: 0.875rem;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
             border-radius: 0.5rem;
-            font-size: 1rem;
-            transition: border-color 0.2s;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: white;
         }
 
         .form-group input:focus,
@@ -65,16 +93,11 @@
             box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
         }
 
-        .verification-note {
-            background: #fef3c7;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.875rem;
-            color: #92400e;
+        .form-group input::placeholder {
+            color: #9ca3af;
         }
 
-        .btn-signup {
+        .btn-submit {
             width: 100%;
             background: #1D4ED8;
             color: white;
@@ -85,38 +108,38 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s;
+            margin-top: 0.5rem;
         }
 
-        .btn-signup:hover {
+        .btn-submit:hover {
             background: #1E3A8A;
         }
 
-        .login-link {
+        .signup-footer {
             text-align: center;
             margin-top: 1.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid #e5e7eb;
         }
 
-        .login-link a {
+        .signup-footer a {
             color: #1D4ED8;
             text-decoration: none;
+            font-weight: 500;
         }
 
-        .login-link a:hover {
+        .signup-footer a:hover {
             text-decoration: underline;
         }
 
-        .back-home {
-            display: inline-block;
-            margin-top: 1rem;
-            color: #6b7280;
-            text-decoration: none;
-            font-size: 0.875rem;
-        }
-
-        .back-home:hover {
-            color: #1D4ED8;
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .signup-body {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -124,154 +147,192 @@
 
     <!-- Navigation -->
     <nav class="navbar">
-        <a href="index.html" class="logo">🏠 Tether<span>ng</span></a>
-        <div class="nav-links">
-            <a href="index.html">Find Property</a>
-            <a href="agent-signup.html" style="color:#1D4ED8; font-weight:600;">List Property</a>
-            <a href="agent-signup.html" class="btn-outline">Sign In</a>
+        <div class="nav-container">
+            <a href="index.html" class="logo">🏠 Tether<span>ng</span></a>
+            <div class="nav-links">
+                <a href="index.html">Find Property</a>
+                <a href="agent-signup.html">List Property</a>
+                <a href="signin.html" class="btn-outline">Sign In</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Signup Container -->
-    <div class="signup-container">
-        <div class="signup-header">
-            <h1>🏢 Become a Verified Agent</h1>
-            <p>Join Tetherng and get trusted tenants with escrow protection</p>
-        </div>
-
-        <div class="signup-form">
-            <div class="verification-note">
-                ⚠️ <strong>Important:</strong> All agents must verify their identity (BVN/NIN) before listing properties. This builds trust with tenants.
+    <!-- Signup Form -->
+    <div class="signup-wrapper">
+        <div class="signup-card">
+            <div class="signup-header">
+                <h1>🏢 Become a Verified Agent</h1>
+                <p>Join Nigeria's most trusted property platform</p>
             </div>
 
-            <form id="agentSignupForm">
-                <div class="form-group">
-                    <label>Full Name *</label>
-                    <input type="text" id="fullName" placeholder="e.g., Olu Adeyemi" required>
+            <div class="signup-body">
+                <div class="verification-badge">
+                    <strong>⚠️ Important:</strong> All agents must verify their identity (BVN/NIN) before listing properties. This builds trust with tenants.
                 </div>
 
-                <div class="form-group">
-                    <label>Email Address *</label>
-                    <input type="email" id="email" placeholder="agent@example.com" required>
-                </div>
+                <form id="agentSignupForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="fullName" placeholder="Olu Adeyemi" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address *</label>
+                            <input type="email" id="email" placeholder="agent@example.com" required>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label>Phone Number *</label>
-                    <input type="tel" id="phone" placeholder="0803 123 4567" required>
-                </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="phone" placeholder="0803 123 4567" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Agency Name *</label>
+                            <input type="text" id="agencyName" placeholder="Adeyemi Properties Ltd" required>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label>Agency Name *</label>
-                    <input type="text" id="agencyName" placeholder="e.g., Adeyemi Properties Ltd" required>
-                </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>BVN or NIN *</label>
+                            <input type="text" id="bvn" placeholder="11-digit number" required>
+                            <small style="color:#6b7280; font-size:0.7rem;">For identity verification</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Years of Experience *</label>
+                            <select id="experience" required>
+                                <option value="">Select</option>
+                                <option value="0-1">Less than 1 year</option>
+                                <option value="1-3">1-3 years</option>
+                                <option value="3-5">3-5 years</option>
+                                <option value="5+">5+ years</option>
+                            </select>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label>BVN or NIN (For Verification) *</label>
-                    <input type="text" id="bvn" placeholder="Enter your 11-digit BVN or NIN" required>
-                </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Create Password *</label>
+                            <input type="password" id="password" placeholder="Minimum 6 characters" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password *</label>
+                            <input type="password" id="confirmPassword" placeholder="Re-enter password" required>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label>Years of Experience *</label>
-                    <select id="experience" required>
-                        <option value="">Select...</option>
-                        <option value="0-1">Less than 1 year</option>
-                        <option value="1-3">1-3 years</option>
-                        <option value="3-5">3-5 years</option>
-                        <option value="5+">5+ years</option>
-                    </select>
-                </div>
+                    <button type="submit" class="btn-submit">✓ Submit Verification</button>
 
-                <div class="form-group">
-                    <label>Create Password *</label>
-                    <input type="password" id="password" placeholder="Minimum 6 characters" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Confirm Password *</label>
-                    <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
-                </div>
-
-                <button type="submit" class="btn-signup">Submit Verification →</button>
-
-                <div class="login-link">
-                    Already have an account? <a href="#">Sign in here</a>
-                </div>
-
-                <div style="text-align: center;">
-                    <a href="index.html" class="back-home">← Back to Homepage</a>
-                </div>
-            </form>
+                    <div class="signup-footer">
+                        Already have an account? <a href="signin.html">Sign in here</a>
+                        <br>
+                        <a href="index.html" style="font-size:0.8rem;">← Back to Homepage</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2025 Tetherng.com - Trusted Property Rentals in Nigeria</p>
-        <p style="margin-top: 0.5rem; font-size: 0.875rem;">Securing your rent from Lagos to Abuja</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🏠 Tetherng</h3>
+                    <p>Trusted property rentals across Nigeria.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Find Property</a>
+                    <a href="agent-signup.html">List Property</a>
+                    <a href="signin.html">Sign In</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: hello@tetherng.com</p>
+                    <p>Phone: 0800-TETHERNG</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Tetherng.com - Securing rent across Nigeria</p>
+            </div>
+        </div>
     </footer>
 
     <script>
-        document.getElementById('agentSignupForm').addEventListener('submit', function(e) {
+        // Form validation and submission
+        const form = document.getElementById('agentSignupForm');
+        
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form values
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const agencyName = document.getElementById('agencyName').value;
-            const bvn = document.getElementById('bvn').value;
+            // Get all values
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const agencyName = document.getElementById('agencyName').value.trim();
+            const bvn = document.getElementById('bvn').value.trim();
             const experience = document.getElementById('experience').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
             
-            // Validation
-            if (!fullName || !email || !phone || !agencyName || !bvn || !experience) {
-                alert('❌ Please fill in all fields');
+            // Validation checks
+            const errors = [];
+            
+            if (!fullName) errors.push('Full Name is required');
+            if (!email) errors.push('Email Address is required');
+            if (!phone) errors.push('Phone Number is required');
+            if (!agencyName) errors.push('Agency Name is required');
+            if (!bvn) errors.push('BVN/NIN is required');
+            if (!experience) errors.push('Years of Experience is required');
+            
+            if (password.length < 6) errors.push('Password must be at least 6 characters');
+            if (password !== confirmPassword) errors.push('Passwords do not match');
+            if (bvn.length < 10) errors.push('Please enter a valid BVN or NIN (10-11 digits)');
+            
+            if (errors.length > 0) {
+                alert('❌ Please fix the following:\n\n• ' + errors.join('\n• '));
                 return;
             }
             
-            if (password.length < 6) {
-                alert('❌ Password must be at least 6 characters');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                alert('❌ Passwords do not match');
-                return;
-            }
-            
-            if (bvn.length < 10) {
-                alert('❌ Please enter a valid BVN or NIN (minimum 10 digits)');
-                return;
-            }
-            
-            // Show success message (backend connection coming soon)
-            alert(`✅ Application Received!\n\nThank you ${fullName} from ${agencyName}.\n\nWe will verify your BVN/NIN and contact you within 24-48 hours.\n\nYou will receive a confirmation email at:\n${email}\n\n📞 Or call us: 0800-TETHERNG`);
-            
-            // Clear form (optional - comment out if you want to keep data)
-            // this.reset();
-            
-            // In the future, this will send data to your backend
-            console.log('Agent Signup Data:', {
+            // Success - store in localStorage for demo
+            const agentData = {
                 fullName,
                 email,
                 phone,
                 agencyName,
                 bvn: '***' + bvn.slice(-4),
                 experience,
-                timestamp: new Date().toISOString()
-            });
+                registeredAt: new Date().toISOString()
+            };
+            
+            localStorage.setItem('tetherng_agent_' + email, JSON.stringify(agentData));
+            
+            alert(`✅ Application Received!\n\nThank you ${fullName} from ${agencyName}.\n\nWe will verify your BVN/NIN and contact you within 24-48 hours.\n\nConfirmation will be sent to:\n${email}\n\n📞 Questions? Call 0800-TETHERNG`);
+            
+            console.log('Agent Signup:', agentData);
+            
+            // Optional: reset form
+            // form.reset();
         });
         
-        // Add phone number formatting
-        document.getElementById('phone').addEventListener('input', function(e) {
+        // Phone number formatting (Nigerian numbers only)
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
-            if (value.startsWith('0') && value.length <= 11) {
-                e.target.value = value;
+            if (value.length > 0 && !value.startsWith('0')) {
+                value = '0' + value;
             }
+            if (value.length > 11) {
+                value = value.slice(0, 11);
+            }
+            e.target.value = value;
         });
         
-        // BVN/NIN number only
-        document.getElementById('bvn').addEventListener('input', function(e) {
+        // BVN/NIN numbers only
+        const bvnInput = document.getElementById('bvn');
+        bvnInput.addEventListener('input', function(e) {
             e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11);
         });
     </script>
