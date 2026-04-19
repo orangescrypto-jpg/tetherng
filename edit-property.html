@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetherng - Edit Property</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .form-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .form-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.875rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1D4ED8;
+            box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .image-selector {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .image-option {
+            font-size: 2rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .image-option:hover {
+            border-color: #1D4ED8;
+            transform: scale(1.1);
+        }
+
+        .image-option.selected {
+            border-color: #1D4ED8;
+            background: #e0e7ff;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #F59E0B;
+            color: #1f2937;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 1rem;
+        }
+
+        .btn-submit:hover {
+            background: #D97706;
+        }
+
+        .btn-cancel {
+            width: 100%;
+            background: #6b7280;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-cancel:hover {
+            background: #4b5563;
+        }
+
+        .btn-delete {
+            width: 100%;
+            background: #ef4444;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        @media (max-width: 640px) {
+            .form-wrapper {
+                padding: 1rem;
+            }
+            .form-body {
+                padding: 1.5rem;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🏠 Tether<span>ng</span></a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="agent-dashboard.html">Dashboard</a>
+                <a href="#" id="logoutLink" style="color:#ef4444;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="form-wrapper">
+        <div class="form-card">
+            <div class="form-header">
+                <h1>✏️ Edit Property</h1>
+                <p>Update your property information</p>
+            </div>
+
+            <div class="form-body">
+                <form id="editPropertyForm">
+                    <div class="form-group">
+                        <label>Property Title *</label>
+                        <input type="text" id="title" placeholder="e.g., Modern 3-Bedroom Apartment" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Property Image (Choose one) *</label>
+                        <div class="image-selector" id="imageSelector">
+                            <div class="image-option" data-image="🏠">🏠 House</div>
+                            <div class="image-option" data-image="🏢">🏢 Building</div>
+                            <div class="image-option" data-image="🏘️">🏘️ Houses</div>
+                            <div class="image-option" data-image="🏡">🏡 Cottage</div>
+                            <div class="image-option" data-image="🏚️">🏚️ Cabin</div>
+                            <div class="image-option" data-image="🏤">🏤 Office</div>
+                        </div>
+                        <input type="hidden" id="selectedImage" value="🏠">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Price (per year) *</label>
+                            <input type="number" id="priceValue" placeholder="e.g., 1500000" required>
+                            <small style="color:#6b7280;">In Naira (₦)</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Price Display *</label>
+                            <input type="text" id="priceDisplay" placeholder="e.g., ₦1,500,000/year" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Location *</label>
+                            <input type="text" id="location" placeholder="e.g., Lekki Phase 1, Lagos" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Property Status *</label>
+                            <select id="status" required>
+                                <option value="available">Available</option>
+                                <option value="rented">Rented</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Bedrooms *</label>
+                            <input type="number" id="bedrooms" placeholder="e.g., 3" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Bathrooms *</label>
+                            <input type="number" id="bathrooms" placeholder="e.g., 2" min="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Size (m²) *</label>
+                            <input type="text" id="size" placeholder="e.g., 150m²" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Property Type</label>
+                            <select id="propertyType">
+                                <option value="apartment">Apartment</option>
+                                <option value="duplex">Duplex</option>
+                                <option value="bungalow">Bungalow</option>
+                                <option value="self-contained">Self-Contained</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description *</label>
+                        <textarea id="description" rows="4" placeholder="Describe the property... amenities, nearby facilities, etc." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">✓ Save Changes</button>
+                    <a href="agent-dashboard.html" class="btn-cancel">← Cancel</a>
+                    <button type="button" id="deletePropertyBtn" class="btn-delete">🗑️ Delete Property</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🏠 Tetherng</h3>
+                    <p>Trusted property rentals across Nigeria.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Find Property</a>
+                    <a href="agent-signup.html">List Property</a>
+                    <a href="about.html">About Us</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: hello@tetherng.com</p>
+                    <p>Phone: 0800-TETHERNG</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Tetherng.com - Securing rent across Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        const currentAgent = localStorage.getItem('tetherng_current_agent');
+        
+        if (!currentAgent) {
+            alert('Please sign in to edit properties');
+            window.location.href = 'signin.html';
+        }
+        
+        const agent = JSON.parse(currentAgent);
+        
+        // Get property to edit from localStorage
+        const editingProperty = JSON.parse(localStorage.getItem('tetherng_editing_property'));
+        
+        if (!editingProperty) {
+            alert('No property selected for editing');
+            window.location.href = 'agent-dashboard.html';
+        }
+        
+        // Image selector functionality
+        const imageOptions = document.querySelectorAll('.image-option');
+        const selectedImageInput = document.getElementById('selectedImage');
+        
+        imageOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                imageOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedImageInput.value = this.getAttribute('data-image');
+            });
+        });
+        
+        // Load property data into form
+        function loadPropertyData() {
+            document.getElementById('title').value = editingProperty.title;
+            document.getElementById('priceValue').value = editingProperty.priceValue;
+            document.getElementById('priceDisplay').value = editingProperty.price;
+            document.getElementById('location').value = editingProperty.location;
+            document.getElementById('status').value = editingProperty.status;
+            document.getElementById('bedrooms').value = editingProperty.bedrooms;
+            document.getElementById('bathrooms').value = editingProperty.bathrooms;
+            document.getElementById('size').value = editingProperty.size;
+            document.getElementById('propertyType').value = editingProperty.propertyType || 'apartment';
+            document.getElementById('description').value = editingProperty.description;
+            
+            // Set selected image
+            const imageToSelect = editingProperty.image || '🏠';
+            selectedImageInput.value = imageToSelect;
+            
+            imageOptions.forEach(option => {
+                if (option.getAttribute('data-image') === imageToSelect) {
+                    option.classList.add('selected');
+                }
+            });
+        }
+        
+        // Auto-format price display
+        const priceValueInput = document.getElementById('priceValue');
+        const priceDisplayInput = document.getElementById('priceDisplay');
+        
+        priceValueInput.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            if (!isNaN(value)) {
+                priceDisplayInput.value = `₦${value.toLocaleString()}/year`;
+            }
+        });
+        
+        // Save changes
+        const form = document.getElementById('editPropertyForm');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get updated values
+            const updatedProperty = {
+                ...editingProperty,
+                title: document.getElementById('title').value.trim(),
+                image: selectedImageInput.value,
+                priceValue: parseInt(document.getElementById('priceValue').value),
+                price: document.getElementById('priceDisplay').value.trim(),
+                location: document.getElementById('location').value.trim(),
+                status: document.getElementById('status').value,
+                bedrooms: parseInt(document.getElementById('bedrooms').value),
+                bathrooms: parseInt(document.getElementById('bathrooms').value),
+                size: document.getElementById('size').value.trim(),
+                propertyType: document.getElementById('propertyType').value,
+                description: document.getElementById('description').value.trim(),
+                lastUpdated: new Date().toISOString()
+            };
+            
+            // Get all properties
+            let agentProperties = JSON.parse(localStorage.getItem('tetherng_properties_' + agent.email)) || [];
+            
+            // Find and update the property
+            const index = agentProperties.findIndex(p => p.id === editingProperty.id);
+            
+            if (index !== -1) {
+                agentProperties[index] = updatedProperty;
+                localStorage.setItem('tetherng_properties_' + agent.email, JSON.stringify(agentProperties));
+                localStorage.removeItem('tetherng_editing_property');
+                
+                alert(`✅ Property Updated Successfully!\n\n${updatedProperty.title}\n📍 ${updatedProperty.location}\n💰 ${updatedProperty.price}`);
+                window.location.href = 'agent-dashboard.html';
+            } else {
+                alert('❌ Error: Property not found');
+            }
+        });
+        
+        // Delete property
+        document.getElementById('deletePropertyBtn').addEventListener('click', function() {
+            if (confirm(`⚠️ Are you sure you want to delete "${editingProperty.title}"?\n\nThis action cannot be undone.`)) {
+                
+                let agentProperties = JSON.parse(localStorage.getItem('tetherng_properties_' + agent.email)) || [];
+                const updatedProperties = agentProperties.filter(p => p.id !== editingProperty.id);
+                
+                localStorage.setItem('tetherng_properties_' + agent.email, JSON.stringify(updatedProperties));
+                localStorage.removeItem('tetherng_editing_property');
+                
+                alert(`🗑️ Property deleted successfully!`);
+                window.location.href = 'agent-dashboard.html';
+            }
+        });
+        
+        // Logout function
+        document.getElementById('logoutLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('tetherng_current_agent');
+            alert('You have been logged out successfully.');
+            window.location.href = 'index.html';
+        });
+        
+        // Load the property data
+        loadPropertyData();
+    </script>
+</body>
+</html>
