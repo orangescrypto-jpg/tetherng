@@ -409,4 +409,12 @@ body {
     .features-grid, .property-grid {
         grid-template-columns: 1fr;
     }
+/* Footer links hover effect */
+.footer-section a {
+    transition: color 0.2s;
+}
+
+.footer-section a:hover {
+    color: #F59E0B;
+}
 }
