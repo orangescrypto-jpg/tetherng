@@ -167,6 +167,7 @@ body {
     font-size: 0.875rem;
     font-weight: 500;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
 .city-badge:hover {
@@ -361,10 +362,11 @@ body {
     color: #9ca3af;
     text-decoration: none;
     margin-bottom: 0.5rem;
+    transition: color 0.2s;
 }
 
 .footer-section a:hover {
-    color: white;
+    color: #F59E0B;
 }
 
 .footer-section p {
@@ -409,12 +411,4 @@ body {
     .features-grid, .property-grid {
         grid-template-columns: 1fr;
     }
-/* Footer links hover effect */
-.footer-section a {
-    transition: color 0.2s;
-}
-
-.footer-section a:hover {
-    color: #F59E0B;
-}
 }
