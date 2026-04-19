@@ -224,7 +224,7 @@
             <div class="nav-links">
                 <a href="index.html">Find Property</a>
                 <a href="agent-signup.html">List Property</a>
-                <a href="signin.html" class="btn-outline">Sign In</a>
+                <a href="tenant-signin.html" class="btn-outline">Sign In</a>
             </div>
         </div>
     </nav>
@@ -402,16 +402,31 @@
             alert(`📞 Contact Agent\n\nEmail: ${email}\nPhone: 0800-TETHERNG\n\nOur team will connect you with the agent within 24 hours.\n\n(Full messaging system coming soon!)`);
         };
         
-        // Save property function (for tenants)
+        // Save property function (for tenants) - UPDATED to work with tenant accounts
         window.saveProperty = function(id) {
-            let savedProperties = JSON.parse(localStorage.getItem('tetherng_saved_properties')) || [];
+            // Check if tenant is logged in
+            const currentTenant = localStorage.getItem('tetherng_current_tenant');
+            
+            if (!currentTenant) {
+                alert('🔐 Please sign in as a tenant to save properties.\n\nClick OK to go to tenant sign in page.');
+                window.location.href = 'tenant-signin.html';
+                return;
+            }
+            
+            const tenant = JSON.parse(currentTenant);
+            let savedProperties = tenant.savedProperties || [];
             
             if (!savedProperties.includes(id)) {
                 savedProperties.push(id);
-                localStorage.setItem('tetherng_saved_properties', JSON.stringify(savedProperties));
-                alert('❤️ Property saved to your favorites!');
+                tenant.savedProperties = savedProperties;
+                
+                // Update both the tenant record and current session
+                localStorage.setItem('tetherng_tenant_' + tenant.email, JSON.stringify(tenant));
+                localStorage.setItem('tetherng_current_tenant', JSON.stringify(tenant));
+                
+                alert('❤️ Property saved to your dashboard!\n\nYou can view it anytime in your Tenant Dashboard.');
             } else {
-                alert('This property is already in your saved list.');
+                alert('This property is already in your saved list.\n\nView it in your Tenant Dashboard.');
             }
         };
     </script>
