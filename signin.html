@@ -160,7 +160,7 @@
                     </div>
 
                     <div class="demo-note">
-                        💡 <strong>Demo Mode:</strong> This is a preview. Full authentication coming with backend.
+                        💡 <strong>Demo Mode:</strong> Sign in with the email you used to register
                     </div>
                 </form>
             </div>
@@ -179,7 +179,7 @@
                     <h4>Quick Links</h4>
                     <a href="index.html">Find Property</a>
                     <a href="agent-signup.html">List Property</a>
-                    <a href="signin.html">Sign In</a>
+                    <a href="about.html">About Us</a>
                 </div>
                 <div class="footer-section">
                     <h4>Contact</h4>
@@ -188,7 +188,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Tetherng.com - Securing rent across Nigeria</p>
+                <p>&copy; 2026 Tetherng.com - Securing rent across Nigeria</p>
             </div>
         </div>
     </footer>
@@ -207,12 +207,19 @@
                 return;
             }
             
-            // Demo: Check if this email was registered as an agent
+            // Check if this email was registered as an agent
             const storedAgent = localStorage.getItem('tetherng_agent_' + email);
             
             if (storedAgent) {
-                alert(`✅ Welcome back!\n\nYou have successfully signed in.\n\n(Full dashboard coming soon with backend)`);
-                console.log('Signed in as:', JSON.parse(storedAgent));
+                const agent = JSON.parse(storedAgent);
+                
+                // Store current agent in localStorage for dashboard
+                localStorage.setItem('tetherng_current_agent', JSON.stringify(agent));
+                
+                alert(`✅ Welcome back ${agent.fullName}!\n\nRedirecting to your dashboard...`);
+                
+                // Redirect to dashboard
+                window.location.href = 'agent-dashboard.html';
             } else {
                 alert(`⚠️ Account not found for ${email}\n\nPlease sign up as an agent first.\n\nClick "Become an Agent" to register.`);
             }
