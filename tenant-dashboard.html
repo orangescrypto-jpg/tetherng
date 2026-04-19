@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetherng - Tenant Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-card h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1D4ED8;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .property-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .property-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .property-info {
+            padding: 1rem;
+        }
+
+        .property-price {
+            color: #1D4ED8;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .remove-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🏠 Tether<span>ng</span></a>
+            <div class="nav-links">
+                <a href="index.html">Find Property</a>
+                <a href="agent-signup.html">List Property</a>
+                <a href="#" id="logoutLink" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <div class="welcome-card" id="welcomeCard">
+            <h1 id="welcomeMessage">Welcome to your dashboard!</h1>
+            <p id="tenantInfo">Manage your saved properties</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="savedCount">0</div>
+                <div>Saved Properties</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="searchCount">0</div>
+                <div>Properties Found</div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>❤️ Your Saved Properties</h2>
+            <a href="index.html" class="btn-add" style="background: #1D4ED8; padding: 0.5rem 1rem; border-radius: 0.5rem; color: white; text-decoration: none;">+ Find More Properties</a>
+        </div>
+
+        <div id="savedPropertiesGrid" class="property-grid">
+            <!-- Saved properties will appear here -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🏠 Tetherng</h3>
+                    <p>Trusted property rentals across Nigeria.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Find Property</a>
+                    <a href="agent-signup.html">List Property</a>
+                    <a href="about.html">About Us</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: hello@tetherng.com</p>
+                    <p>Phone: 0800-TETHERNG</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Tetherng.com - Securing rent across Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const currentTenant = localStorage.getItem('tetherng_current_tenant');
+        
+        if (!currentTenant) {
+            alert('Please sign in to access your dashboard');
+            window.location.href = 'tenant-signin.html';
+        }
+        
+        const tenant = JSON.parse(currentTenant);
+        
+        document.getElementById('welcomeMessage').innerHTML = `Welcome back, ${tenant.fullName}!`;
+        document.getElementById('tenantInfo').innerHTML = `${tenant.email} • Preferred: ${tenant.preferredLocation || 'All Nigeria'}`;
+        
+        // Get all properties
+        function getAllProperties() {
+            let allProperties = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('tetherng_properties_')) {
+                    const agentProperties = JSON.parse(localStorage.getItem(key));
+                    if (Array.isArray(agentProperties)) {
+                        allProperties = allProperties.concat(agentProperties);
+                    }
+                }
+            }
+            return allProperties;
+        }
+        
+        // Get saved property IDs
+        const savedIds = tenant.savedProperties || [];
+        document.getElementById('savedCount').textContent = savedIds.length;
+        document.getElementById('searchCount').textContent = getAllProperties().length;
+        
+        // Display saved properties
+        function displaySavedProperties() {
+            const allProperties = getAllProperties();
+            const savedProperties = allProperties.filter(p => savedIds.includes(p.id));
+            const grid = document.getElementById('savedPropertiesGrid');
+            
+            if (savedProperties.length === 0) {
+                grid.innerHTML = `<div class="empty-state">💔 No saved properties yet.<br><br>Browse properties and click "❤️ Save Property" on any listing!</div>`;
+                return;
+            }
+            
+            grid.innerHTML = savedProperties.map(property => `
+                <div class="property-card" onclick="viewProperty(${property.id})">
+                    <div class="property-image">${property.image || '🏠'}</div>
+                    <div class="property-info">
+                        <div class="property-price">${property.price || '₦0/year'}</div>
+                        <div><strong>${property.title}</strong></div>
+                        <div style="color: #6b7280; font-size: 0.875rem;">📍 ${property.location}</div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; color: #6b7280; font-size: 0.75rem;">
+                            <span>🛏️ ${property.bedrooms || 0}</span>
+                            <span>🛁 ${property.bathrooms || 0}</span>
+                            <span>📐 ${property.size || 'N/A'}</span>
+                        </div>
+                        <button class="remove-btn" onclick="removeSavedProperty(event, ${property.id})">Remove from Saved</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        window.viewProperty = function(id) {
+            window.location.href = `property-detail.html?id=${id}`;
+        };
+        
+        window.removeSavedProperty = function(event, propertyId) {
+            event.stopPropagation();
+            
+            const updatedSaved = savedIds.filter(id => id !== propertyId);
+            tenant.savedProperties = updatedSaved;
+            localStorage.setItem('tetherng_tenant_' + tenant.email, JSON.stringify(tenant));
+            localStorage.setItem('tetherng_current_tenant', JSON.stringify(tenant));
+            
+            document.getElementById('savedCount').textContent = updatedSaved.length;
+            displaySavedProperties();
+            alert('Property removed from your saved list.');
+        };
+        
+        document.getElementById('logoutLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('tetherng_current_tenant');
+            alert('You have been logged out.');
+            window.location.href = 'index.html';
+        });
+        
+        displaySavedProperties();
+    </script>
+</body>
+</html>
