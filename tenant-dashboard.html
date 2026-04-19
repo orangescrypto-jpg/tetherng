@@ -51,6 +51,21 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            color: #1f2937;
+        }
+
+        .btn-add {
+            background: #1D4ED8;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
         }
 
         .property-grid {
@@ -107,6 +122,7 @@
             text-align: center;
             padding: 3rem;
             color: #6b7280;
+            grid-column: 1/-1;
         }
 
         .logout-btn {
@@ -150,7 +166,7 @@
 
         <div class="section-header">
             <h2>❤️ Your Saved Properties</h2>
-            <a href="index.html" class="btn-add" style="background: #1D4ED8; padding: 0.5rem 1rem; border-radius: 0.5rem; color: white; text-decoration: none;">+ Find More Properties</a>
+            <a href="index.html" class="btn-add">+ Find More Properties</a>
         </div>
 
         <div id="savedPropertiesGrid" class="property-grid">
@@ -196,7 +212,6 @@
         document.getElementById('welcomeMessage').innerHTML = `Welcome back, ${tenant.fullName}!`;
         document.getElementById('tenantInfo').innerHTML = `${tenant.email} • Preferred: ${tenant.preferredLocation || 'All Nigeria'}`;
         
-        // Get all properties
         function getAllProperties() {
             let allProperties = [];
             for (let i = 0; i < localStorage.length; i++) {
@@ -211,12 +226,10 @@
             return allProperties;
         }
         
-        // Get saved property IDs
         const savedIds = tenant.savedProperties || [];
         document.getElementById('savedCount').textContent = savedIds.length;
         document.getElementById('searchCount').textContent = getAllProperties().length;
         
-        // Display saved properties
         function displaySavedProperties() {
             const allProperties = getAllProperties();
             const savedProperties = allProperties.filter(p => savedIds.includes(p.id));
