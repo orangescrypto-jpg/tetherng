@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetherng - Sign In to Your Account</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .signin-wrapper {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: #f9fafb;
+        }
+
+        .signin-card {
+            max-width: 450px;
+            width: 100%;
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .signin-header {
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .signin-header h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .signin-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .signin-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.875rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1D4ED8;
+            box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+        }
+
+        .btn-signin {
+            width: 100%;
+            background: #1D4ED8;
+            color: white;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-signin:hover {
+            background: #1E3A8A;
+        }
+
+        .signin-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .signin-footer a {
+            color: #1D4ED8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .signin-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .demo-note {
+            background: #e0e7ff;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #1D4ED8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🏠 Tether<span>ng</span></a>
+            <div class="nav-links">
+                <a href="index.html">Find Property</a>
+                <a href="agent-signup.html">List Property</a>
+                <a href="signin.html" class="btn-outline">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sign In Form -->
+    <div class="signin-wrapper">
+        <div class="signin-card">
+            <div class="signin-header">
+                <h1>🔐 Welcome Back</h1>
+                <p>Sign in to your Tetherng account</p>
+            </div>
+
+            <div class="signin-body">
+                <form id="signinForm">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="email" placeholder="agent@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="password" placeholder="Enter your password" required>
+                    </div>
+
+                    <button type="submit" class="btn-signin">Sign In →</button>
+
+                    <div class="signin-footer">
+                        Don't have an account? <a href="agent-signup.html">Become an Agent</a>
+                        <br>
+                        <a href="index.html" style="font-size:0.8rem;">← Back to Homepage</a>
+                    </div>
+
+                    <div class="demo-note">
+                        💡 <strong>Demo Mode:</strong> This is a preview. Full authentication coming with backend.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🏠 Tetherng</h3>
+                    <p>Trusted property rentals across Nigeria.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Find Property</a>
+                    <a href="agent-signup.html">List Property</a>
+                    <a href="signin.html">Sign In</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: hello@tetherng.com</p>
+                    <p>Phone: 0800-TETHERNG</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Tetherng.com - Securing rent across Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const form = document.getElementById('signinForm');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                alert('❌ Please enter both email and password');
+                return;
+            }
+            
+            // Demo: Check if this email was registered as an agent
+            const storedAgent = localStorage.getItem('tetherng_agent_' + email);
+            
+            if (storedAgent) {
+                alert(`✅ Welcome back!\n\nYou have successfully signed in.\n\n(Full dashboard coming soon with backend)`);
+                console.log('Signed in as:', JSON.parse(storedAgent));
+            } else {
+                alert(`⚠️ Account not found for ${email}\n\nPlease sign up as an agent first.\n\nClick "Become an Agent" to register.`);
+            }
+        });
+    </script>
+</body>
+</html>
