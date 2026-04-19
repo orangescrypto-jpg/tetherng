@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetherng - Contact Agent</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contact-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .contact-header {
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .contact-header h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-body {
+            padding: 2rem;
+        }
+
+        .property-info {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #1D4ED8;
+        }
+
+        .property-info h3 {
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .property-info p {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin: 0.25rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.875rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1D4ED8;
+            box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #1D4ED8;
+            color: white;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #1E3A8A;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .back-link:hover {
+            color: #1D4ED8;
+        }
+
+        @media (max-width: 640px) {
+            .contact-wrapper {
+                padding: 1rem;
+            }
+            .contact-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🏠 Tether<span>ng</span></a>
+            <div class="nav-links">
+                <a href="index.html">Find Property</a>
+                <a href="agent-signup.html">List Property</a>
+                <a href="tenant-signin.html" class="btn-outline">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="contact-wrapper">
+        <div class="contact-card">
+            <div class="contact-header">
+                <h1>📞 Contact Agent</h1>
+                <p>Send your inquiry about this property</p>
+            </div>
+
+            <div class="contact-body">
+                <div class="property-info" id="propertyInfo">
+                    <!-- Property info loaded by JavaScript -->
+                    <p>Loading property details...</p>
+                </div>
+
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label>Your Full Name *</label>
+                        <input type="text" id="senderName" placeholder="Olu Adeyemi" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Email Address *</label>
+                        <input type="email" id="senderEmail" placeholder="tenant@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Phone Number</label>
+                        <input type="tel" id="senderPhone" placeholder="0803 123 4567">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Message *</label>
+                        <textarea id="message" rows="5" placeholder="I'm interested in this property. I would like to schedule a viewing..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">📤 Send Message to Agent</button>
+                    <a href="javascript:history.back()" class="back-link">← Back to Property</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🏠 Tetherng</h3>
+                    <p>Trusted property rentals across Nigeria.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Find Property</a>
+                    <a href="agent-signup.html">List Property</a>
+                    <a href="about.html">About Us</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: hello@tetherng.com</p>
+                    <p>Phone: 0800-TETHERNG</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Tetherng.com - Securing rent across Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Get property ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const propertyId = parseInt(urlParams.get('id'));
+        
+        // Get all properties
+        let allProperties = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('tetherng_properties_')) {
+                const agentProperties = JSON.parse(localStorage.getItem(key));
+                if (Array.isArray(agentProperties)) {
+                    allProperties = allProperties.concat(agentProperties);
+                }
+            }
+        }
+        
+        // Sample properties if none exist
+        if (allProperties.length === 0) {
+            allProperties = [
+                {
+                    id: 1001,
+                    title: 'Modern 3-Bedroom Apartment',
+                    price: '₦1,500,000/year',
+                    location: 'Lekki Phase 1, Lagos',
+                    agentName: 'Olu Adeyemi',
+                    agentEmail: 'agent@example.com'
+                }
+            ];
+        }
+        
+        // Find the property
+        const property = allProperties.find(p => p.id === propertyId);
+        
+        if (property) {
+            document.getElementById('propertyInfo').innerHTML = `
+                <h3>📋 ${property.title}</h3>
+                <p>📍 ${property.location}</p>
+                <p>💰 ${property.price}</p>
+                <p style="margin-top: 0.5rem;">👔 Agent: ${property.agentName || 'Verified Agent'}</p>
+                <p>📧 Agent Email: ${property.agentEmail || 'Not provided'}</p>
+            `;
+        } else {
+            document.getElementById('propertyInfo').innerHTML = `<p>❌ Property information not available.</p>`;
+        }
+        
+        // Auto-fill tenant info if logged in
+        const currentTenant = localStorage.getItem('tetherng_current_tenant');
+        if (currentTenant) {
+            const tenant = JSON.parse(currentTenant);
+            document.getElementById('senderName').value = tenant.fullName || '';
+            document.getElementById('senderEmail').value = tenant.email || '';
+            document.getElementById('senderPhone').value = tenant.phone || '';
+        }
+        
+        // Form submission
+        const form = document.getElementById('contactForm');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const senderName = document.getElementById('senderName').value.trim();
+            const senderEmail = document.getElementById('senderEmail').value.trim();
+            const senderPhone = document.getElementById('senderPhone').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            const errors = [];
+            if (!senderName) errors.push('Your name is required');
+            if (!senderEmail) errors.push('Your email is required');
+            if (!message) errors.push('Message is required');
+            
+            if (errors.length > 0) {
+                alert('❌ Please fix the following:\n\n• ' + errors.join('\n• '));
+                return;
+            }
+            
+            // Create inquiry object
+            const inquiry = {
+                id: Date.now(),
+                propertyId: propertyId,
+                propertyTitle: property ? property.title : 'Unknown',
+                propertyLocation: property ? property.location : 'Unknown',
+                senderName: senderName,
+                senderEmail: senderEmail,
+                senderPhone: senderPhone,
+                message: message,
+                agentEmail: property ? property.agentEmail : null,
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+            
+            // Save to localStorage
+            let allInquiries = JSON.parse(localStorage.getItem('tetherng_inquiries')) || [];
+            allInquiries.push(inquiry);
+            localStorage.setItem('tetherng_inquiries', JSON.stringify(allInquiries));
+            
+            alert(`✅ Message Sent Successfully!\n\nThank you ${senderName}.\n\nThe agent will contact you within 24 hours.\n\nReference ID: #${inquiry.id}`);
+            
+            // Clear form or redirect
+            form.reset();
+            
+            // Redirect back to property detail after 2 seconds
+            setTimeout(() => {
+                window.location.href = `property-detail.html?id=${propertyId}`;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
