@@ -3,103 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tetherng - Trusted Property Rentals in Nigeria</title>
+    <title>Tetherng - Trusted Property Rentals Across Nigeria</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- Navigation Bar -->
     <nav class="navbar">
-        <a href="#" class="logo">🏠 Tether<span>ng</span></a>
-        <div class="nav-links">
-            <a href="#">Find Property</a>
-            <a href="#">List Property</a>
-            <a href="#" class="btn-outline">Sign In</a>
+        <div class="nav-container">
+            <a href="index.html" class="logo">🏠 Tether<span>ng</span></a>
+            <div class="nav-links">
+                <a href="#">Find Property</a>
+                <a href="agent-signup.html">List Property</a>
+                <a href="#" class="btn-outline">Sign In</a>
+            </div>
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero">
-        <h1>Find Your Next Home With Trust</h1>
-        <p>Your rent is held in escrow until you get the keys. No more fake listings or advance fee fraud.</p>
-        
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search by location... Lekki, Ikeja, Abuja">
-            <button id="searchBtn">🔍 Search</button>
+        <div class="hero-content">
+            <h1>Find Your Next Home <br>With Trust Across Nigeria</h1>
+            <p>Your rent is held in escrow until you get the keys. No more fake listings or advance fee fraud.</p>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by city... Lagos, Abuja, Port Harcourt, Ibadan, Kano">
+                <button id="searchBtn">🔍 Search Properties</button>
+            </div>
+            
+            <div class="trust-badges">
+                <span>✅ Verified Agents</span>
+                <span>🔒 Escrow Protection</span>
+                <span>🏠 Real Properties</span>
+                <span>💰 No Advance Fees</span>
+            </div>
         </div>
-        
-        <p style="margin-top: 1rem; font-size: 0.875rem;">
-            ✅ Verified Agents | 🔒 Escrow Protection | 🏠 Real Properties
-        </p>
     </section>
 
+    <!-- Cities Coverage Section -->
+    <section class="cities">
+        <div class="container">
+            <h2>We Cover All Major Cities in Nigeria</h2>
+            <div class="city-grid" id="cityGrid">
+                <!-- Cities will be added by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
     <section class="features">
-        <h2>How Tetherng Protects You</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="icon">🔍</div>
-                <h3>1. Find Verified Properties</h3>
-                <p>All agents and properties are verified before listing. No fake listings.</p>
-            </div>
-            <div class="card">
-                <div class="icon">💰</div>
-                <h3>2. Pay Into Escrow</h3>
-                <p>Your rent is held safely by Tetherng - not released to the agent yet.</p>
-            </div>
-            <div class="card">
-                <div class="icon">🔑</div>
-                <h3>3. Get Keys, Then Release</h3>
-                <p>Agent gets paid only after you confirm you've received the keys.</p>
+        <div class="container">
+            <h2>How Tetherng Protects You</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>1. Find Verified Properties</h3>
+                    <p>All agents and properties are verified before listing. No fake listings anywhere in Nigeria.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>2. Pay Into Escrow</h3>
+                    <p>Your rent is held safely by Tetherng - not released to the agent until you get the keys.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔑</div>
+                    <h3>3. Get Keys, Then Release</h3>
+                    <p>Agent gets paid only after you confirm you've received the keys to your new home.</p>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Featured Properties Section -->
     <section class="properties">
-        <h2>Featured Properties</h2>
-        <div class="property-grid">
-            <div class="property-card">
-                <div class="property-image">🏠</div>
-                <div class="property-info">
-                    <div class="property-price">₦1.5M/year</div>
-                    <div class="property-title">Modern 3-Bedroom Apartment</div>
-                    <div class="property-location">📍 Lekki Phase 1, Lagos</div>
-                    <div class="property-details">
-                        <span>🛏️ 3 Beds</span>
-                        <span>🛁 2 Baths</span>
-                        <span>📐 150m²</span>
-                    </div>
-                </div>
-            </div>
-            <div class="property-card">
-                <div class="property-image">🏢</div>
-                <div class="property-info">
-                    <div class="property-price">₦800K/year</div>
-                    <div class="property-title">Cozy 2-Bedroom Flat</div>
-                    <div class="property-location">📍 Ikeja GRA, Lagos</div>
-                    <div class="property-details">
-                        <span>🛏️ 2 Beds</span>
-                        <span>🛁 2 Baths</span>
-                        <span>📐 100m²</span>
-                    </div>
-                </div>
-            </div>
-            <div class="property-card">
-                <div class="property-image">🏘️</div>
-                <div class="property-info">
-                    <div class="property-price">₦2.5M/year</div>
-                    <div class="property-title">Luxury 4-Bedroom Duplex</div>
-                    <div class="property-location">📍 Banana Island, Lagos</div>
-                    <div class="property-details">
-                        <span>🛏️ 4 Beds</span>
-                        <span>🛁 4 Baths</span>
-                        <span>📐 250m²</span>
-                    </div>
-                </div>
+        <div class="container">
+            <h2>Featured Properties Across Nigeria</h2>
+            <p class="section-subtitle">Verified listings from trusted agents</p>
+            <div class="property-grid" id="propertyGrid">
+                <!-- Properties will be added by JavaScript -->
             </div>
         </div>
     </section>
 
+    <!-- Call to Action for Agents -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Are You a Property Agent?</h2>
+            <p>Join Tetherng and get verified tenants with guaranteed payments through escrow.</p>
+            <a href="agent-signup.html" class="btn-cta">List Your Properties Today →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2025 Tetherng.com - Trusted Property Rentals in Nigeria</p>
-        <p style="margin-top: 0.5rem; font-size: 0.875rem;">Securing your rent from Lagos to Abuja</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🏠 Tetherng</h3>
+                    <p>Trusted property rentals across Nigeria. Your rent is safe with escrow.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#">Find Property</a>
+                    <a href="agent-signup.html">List Property</a>
+                    <a href="#">About Us</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: hello@tetherng.com</p>
+                    <p>Phone: 0800-TETHERNG</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Tetherng.com - Securing rent from Lagos to Maiduguri</p>
+            </div>
+        </div>
     </footer>
 
     <script src="script.js"></script>
