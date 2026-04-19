@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetherng - Agent Inbox</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .inbox-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .inbox-header {
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .inbox-header h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1D4ED8;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #e5e7eb;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #1D4ED8;
+            color: white;
+        }
+
+        .messages-list {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .message-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .message-item:hover {
+            background: #f9fafb;
+        }
+
+        .message-item.unread {
+            background: #e0e7ff;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sender-name {
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .message-date {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .property-title {
+            font-size: 0.875rem;
+            color: #1D4ED8;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-preview {
+            color: #6b7280;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .unread-badge {
+            background: #ef4444;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.7rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 600px;
+            width: 90%;
+            border-radius: 1rem;
+            overflow: hidden;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-reply {
+            background: #1D4ED8;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .btn-close {
+            background: #6b7280;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .detail-row {
+            margin-bottom: 1rem;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            color: #4b5563;
+        }
+
+        .full-message {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🏠 Tether<span>ng</span></a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="agent-dashboard.html">Dashboard</a>
+                <a href="agent-inbox.html" style="color:#1D4ED8; font-weight:600;">Inbox</a>
+                <a href="#" id="logoutLink" style="color:#ef4444;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="inbox-wrapper">
+        <div class="inbox-header">
+            <h1>📬 Agent Inbox</h1>
+            <p>Messages from tenants interested in your properties</p>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+            <!-- Stats loaded by JS -->
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Messages</button>
+            <button class="filter-btn" data-filter="unread">Unread</button>
+            <button class="filter-btn" data-filter="read">Read</button>
+        </div>
+
+        <div class="messages-list" id="messagesList">
+            <!-- Messages loaded by JS -->
+        </div>
+    </div>
+
+    <!-- Message Detail Modal -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Message Details</h2>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content loaded by JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-reply" onclick="replyToMessage()">📧 Reply (Coming Soon)</button>
+                <button class="btn-close" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if agent is logged in
+        const currentAgent = localStorage.getItem('tetherng_current_agent');
+        
+        if (!currentAgent) {
+            alert('Please sign in as an agent to view messages');
+            window.location.href = 'signin.html';
+        }
+        
+        const agent = JSON.parse(currentAgent);
+        const agentEmail = agent.email;
+        
+        // Get all inquiries
+        let allInquiries = JSON.parse(localStorage.getItem('tetherng_inquiries')) || [];
+        
+        // Filter inquiries for this agent
+        let agentInquiries = allInquiries.filter(inquiry => inquiry.agentEmail === agentEmail);
+        
+        // Mark as read function
+        function markAsRead(inquiryId) {
+            const inquiry = agentInquiries.find(i => i.id === inquiryId);
+            if (inquiry && !inquiry.read) {
+                inquiry.read = true;
+                // Update in allInquiries
+                const index = allInquiries.findIndex(i => i.id === inquiryId);
+                if (index !== -1) {
+                    allInquiries[index].read = true;
+                    localStorage.setItem('tetherng_inquiries', JSON.stringify(allInquiries));
+                }
+                // Refresh display
+                loadMessages();
+                updateStats();
+            }
+        }
+        
+        // Update stats
+        function updateStats() {
+            const total = agentInquiries.length;
+            const unread = agentInquiries.filter(i => !i.read).length;
+            
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${total}</div>
+                    <div>Total Messages</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${unread}</div>
+                    <div>Unread</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${agentInquiries.filter(i => i.read).length}</div>
+                    <div>Read</div>
+                </div>
+            `;
+        }
+        
+        // Load messages
+        let currentFilter = 'all';
+        
+        function loadMessages() {
+            let filteredMessages = agentInquiries;
+            
+            if (currentFilter === 'unread') {
+                filteredMessages = agentInquiries.filter(i => !i.read);
+            } else if (currentFilter === 'read') {
+                filteredMessages = agentInquiries.filter(i => i.read);
+            }
+            
+            // Sort by date (newest first)
+            filteredMessages.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            const messagesList = document.getElementById('messagesList');
+            
+            if (filteredMessages.length === 0) {
+                messagesList.innerHTML = `<div class="empty-state">📭 No messages yet.<br><br>When tenants contact you about properties, they'll appear here.</div>`;
+                return;
+            }
+            
+            messagesList.innerHTML = filteredMessages.map(inquiry => `
+                <div class="message-item ${!inquiry.read ? 'unread' : ''}" onclick="viewMessage(${inquiry.id})">
+                    <div class="message-header">
+                        <span class="sender-name">${inquiry.senderName}</span>
+                        <span class="message-date">${new Date(inquiry.createdAt).toLocaleDateString('en-NG')}</span>
+                        ${!inquiry.read ? '<span class="unread-badge">New</span>' : ''}
+                    </div>
+                    <div class="property-title">🏠 ${inquiry.propertyTitle}</div>
+                    <div class="message-preview">${inquiry.message.substring(0, 100)}${inquiry.message.length > 100 ? '...' : ''}</div>
+                </div>
+            `).join('');
+        }
+        
+        // View message details
+        window.viewMessage = function(id) {
+            const inquiry = agentInquiries.find(i => i.id === id);
+            if (!inquiry) return;
+            
+            // Mark as read
+            markAsRead(id);
+            
+            // Refresh to update unread status
+            loadMessages();
+            updateStats();
+            
+            // Show modal
+            document.getElementById('modalBody').innerHTML = `
+                <div class="detail-row">
+                    <div class="detail-label">From:</div>
+                    <div class="detail-value">${inquiry.senderName}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email:</div>
+                    <div class="detail-value">${inquiry.senderEmail}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Phone:</div>
+                    <div class="detail-value">${inquiry.senderPhone || 'Not provided'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Property:</div>
+                    <div class="detail-value">${inquiry.propertyTitle} - ${inquiry.propertyLocation}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Message:</div>
+                    <div class="full-message">${inquiry.message.replace(/\n/g, '<br>')}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Received:</div>
+                    <div class="detail-value">${new Date(inquiry.createdAt).toLocaleString('en-NG')}</div>
+                </div>
+            `;
+            
+            document.getElementById('messageModal').style.display = 'flex';
+        };
+        
+        window.closeModal = function() {
+            document.getElementById('messageModal').style.display = 'none';
+        };
+        
+        window.replyToMessage = function() {
+            alert('📧 Email reply feature coming soon!\n\nYou can manually reply to the tenant\'s email address shown above.');
+        };
+        
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.getAttribute('data-filter');
+                loadMessages();
+            });
+        });
+        
+        // Logout
+        document.getElementById('logoutLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('tetherng_current_agent');
+            alert('You have been logged out.');
+            window.location.href = 'index.html';
+        });
+        
+        // Initial load
+        updateStats();
+        loadMessages();
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('messageModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+</html>
