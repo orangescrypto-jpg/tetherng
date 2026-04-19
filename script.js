@@ -19,97 +19,159 @@ document.addEventListener('DOMContentLoaded', function() {
             badge.textContent = city;
             badge.onclick = () => {
                 document.getElementById('searchInput').value = city;
-                alert(`🔍 Showing properties in ${city}\n\n(Full property listings coming soon! Agents are joining daily.)`);
+                performSearch();
             };
             cityGrid.appendChild(badge);
         });
     }
     
-    // ========== SAMPLE PROPERTIES DATA ==========
-    const properties = [
-        {
-            id: 1,
-            image: '🏠',
-            price: '₦1.5M/year',
-            title: 'Modern 3-Bedroom Apartment',
-            location: 'Lekki Phase 1, Lagos',
-            beds: 3,
-            baths: 2,
-            size: '150m²'
-        },
-        {
-            id: 2,
-            image: '🏢',
-            price: '₦800K/year',
-            title: 'Cozy 2-Bedroom Flat',
-            location: 'GRA, Ikeja, Lagos',
-            beds: 2,
-            baths: 2,
-            size: '100m²'
-        },
-        {
-            id: 3,
-            image: '🏘️',
-            price: '₦2.5M/year',
-            title: 'Luxury 4-Bedroom Duplex',
-            location: 'Wuse 2, Abuja',
-            beds: 4,
-            baths: 4,
-            size: '250m²'
-        },
-        {
-            id: 4,
-            image: '🏡',
-            price: '₦600K/year',
-            title: 'Self-Contained Mini Flat',
-            location: 'Trans Amadi, Port Harcourt',
-            beds: 1,
-            baths: 1,
-            size: '45m²'
-        },
-        {
-            id: 5,
-            image: '🏚️',
-            price: '₦1.2M/year',
-            title: '3-Bedroom Bungalow',
-            location: 'Bodija, Ibadan',
-            beds: 3,
-            baths: 2,
-            size: '180m²'
-        },
-        {
-            id: 6,
-            image: '🏢',
-            price: '₦1.8M/year',
-            title: 'Executive 3-Bedroom Flat',
-            location: 'GRA, Enugu',
-            beds: 3,
-            baths: 3,
-            size: '160m²'
+    // ========== GET ALL PROPERTIES FROM LOCALSTORAGE ==========
+    function getAllProperties() {
+        let allProperties = [];
+        
+        // Sample properties (fallback)
+        const sampleProperties = [
+            {
+                id: 1001,
+                image: '🏠',
+                price: '₦1,500,000/year',
+                priceValue: 1500000,
+                title: 'Modern 3-Bedroom Apartment',
+                location: 'Lekki Phase 1, Lagos',
+                status: 'available',
+                bedrooms: 3,
+                bathrooms: 2,
+                size: '150m²',
+                propertyType: 'apartment',
+                description: 'Beautiful modern apartment with excellent finishes. Located in the heart of Lekki Phase 1.'
+            },
+            {
+                id: 1002,
+                image: '🏢',
+                price: '₦800,000/year',
+                priceValue: 800000,
+                title: 'Cozy 2-Bedroom Flat',
+                location: 'GRA, Ikeja, Lagos',
+                status: 'available',
+                bedrooms: 2,
+                bathrooms: 2,
+                size: '100m²',
+                propertyType: 'apartment',
+                description: 'Comfortable 2-bedroom flat in a secure estate.'
+            },
+            {
+                id: 1003,
+                image: '🏘️',
+                price: '₦2,500,000/year',
+                priceValue: 2500000,
+                title: 'Luxury 4-Bedroom Duplex',
+                location: 'Wuse 2, Abuja',
+                status: 'available',
+                bedrooms: 4,
+                bathrooms: 4,
+                size: '250m²',
+                propertyType: 'duplex',
+                description: 'Luxury duplex with premium finishes.'
+            },
+            {
+                id: 1004,
+                image: '🏡',
+                price: '₦600,000/year',
+                priceValue: 600000,
+                title: 'Self-Contained Mini Flat',
+                location: 'Trans Amadi, Port Harcourt',
+                status: 'available',
+                bedrooms: 1,
+                bathrooms: 1,
+                size: '45m²',
+                propertyType: 'self-contained',
+                description: 'Perfect for singles or couples.'
+            },
+            {
+                id: 1005,
+                image: '🏚️',
+                price: '₦1,200,000/year',
+                priceValue: 1200000,
+                title: '3-Bedroom Bungalow',
+                location: 'Bodija, Ibadan',
+                status: 'available',
+                bedrooms: 3,
+                bathrooms: 2,
+                size: '180m²',
+                propertyType: 'bungalow',
+                description: 'Spacious bungalow in a quiet neighborhood.'
+            },
+            {
+                id: 1006,
+                image: '🏢',
+                price: '₦1,800,000/year',
+                priceValue: 1800000,
+                title: 'Executive 3-Bedroom Flat',
+                location: 'GRA, Enugu',
+                status: 'available',
+                bedrooms: 3,
+                bathrooms: 3,
+                size: '160m²',
+                propertyType: 'apartment',
+                description: 'Executive apartment with modern amenities.'
+            }
+        ];
+        
+        // Get properties from localStorage (agents' properties)
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('tetherng_properties_')) {
+                const agentProperties = JSON.parse(localStorage.getItem(key));
+                if (Array.isArray(agentProperties) && agentProperties.length > 0) {
+                    allProperties = allProperties.concat(agentProperties);
+                }
+            }
         }
-    ];
+        
+        // If no properties in localStorage, use sample properties
+        if (allProperties.length === 0) {
+            allProperties = sampleProperties;
+        }
+        
+        return allProperties;
+    }
     
-    // Display properties
-    const propertyGrid = document.getElementById('propertyGrid');
-    if (propertyGrid) {
-        properties.forEach(property => {
+    // ========== DISPLAY PROPERTIES ==========
+    function displayProperties(propertiesToShow) {
+        const propertyGrid = document.getElementById('propertyGrid');
+        if (!propertyGrid) return;
+        
+        propertyGrid.innerHTML = '';
+        
+        if (propertiesToShow.length === 0) {
+            propertyGrid.innerHTML = `
+                <div style="text-align: center; padding: 3rem; grid-column: 1/-1;">
+                    <p>🔍 No properties found matching your search.</p>
+                    <p style="margin-top: 0.5rem;">Try a different location or check back later!</p>
+                </div>
+            `;
+            return;
+        }
+        
+        propertiesToShow.forEach(property => {
             const card = document.createElement('div');
             card.className = 'property-card';
             card.onclick = () => {
-                alert(`📞 Interested in: ${property.title}\n\nLocation: ${property.location}\nPrice: ${property.price}\n\nContact us at 0800-TETHERNG to view this property.\n\n(Full booking system coming soon!)`);
+                window.location.href = `property-detail.html?id=${property.id}`;
             };
             
             card.innerHTML = `
-                <div class="property-image">${property.image}</div>
+                <div class="property-image">${property.image || '🏠'}</div>
                 <div class="property-info">
-                    <div class="property-price">${property.price}</div>
+                    <div class="property-price">${property.price || '₦0/year'}</div>
                     <div class="property-title">${property.title}</div>
                     <div class="property-location">📍 ${property.location}</div>
                     <div class="property-details">
-                        <span>🛏️ ${property.beds} Beds</span>
-                        <span>🛁 ${property.baths} Baths</span>
-                        <span>📐 ${property.size}</span>
+                        <span>🛏️ ${property.bedrooms || 0} Beds</span>
+                        <span>🛁 ${property.bathrooms || 0} Baths</span>
+                        <span>📐 ${property.size || 'N/A'}</span>
                     </div>
+                    ${property.status === 'rented' ? '<span style="display: inline-block; margin-top: 0.5rem; padding: 0.25rem 0.5rem; background: #fee2e2; color: #991b1b; border-radius: 0.25rem; font-size: 0.7rem;">Rented</span>' : ''}
                 </div>
             `;
             
@@ -122,22 +184,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     
     function performSearch() {
-        const searchTerm = searchInput.value.trim();
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const allProperties = getAllProperties();
         
         if (searchTerm) {
             // Find properties that match the search
-            const matchingProperties = properties.filter(property => 
-                property.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                property.title.toLowerCase().includes(searchTerm.toLowerCase())
+            const matchingProperties = allProperties.filter(property => 
+                property.location.toLowerCase().includes(searchTerm) ||
+                property.title.toLowerCase().includes(searchTerm)
             );
             
-            if (matchingProperties.length > 0) {
-                alert(`🔍 Found ${matchingProperties.length} property/properties in "${searchTerm}"\n\nClick on any property card to see details!\n\n(More properties coming soon from verified agents.)`);
-            } else {
-                alert(`🔍 No properties found in "${searchTerm}" yet.\n\nBut we're growing daily! Click "List Property" if you're an agent, or check back soon.\n\nTry: Lagos, Abuja, Port Harcourt, Ibadan, or click any city badge above.`);
+            displayProperties(matchingProperties);
+            
+            if (matchingProperties.length === 0) {
+                // No results message is handled by displayProperties
+                console.log(`No properties found for "${searchTerm}"`);
             }
         } else {
-            alert('📍 Please enter a city name (e.g., Lagos, Abuja, Port Harcourt) or click on any city badge above.');
+            // Show all properties if search is empty
+            displayProperties(allProperties);
         }
     }
     
@@ -153,9 +218,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // ========== LOAD ALL PROPERTIES ON PAGE LOAD ==========
+    const allProperties = getAllProperties();
+    displayProperties(allProperties);
+    
     // ========== CONSOLE CONFIRMATION ==========
     console.log('✅ Tetherng website loaded successfully!');
     console.log('📍 Cities loaded:', cities.length);
-    console.log('🏠 Sample properties loaded:', properties.length);
-    console.log('📄 Agent sign up page: agent-signup.html');
+    console.log('🏠 Properties loaded:', allProperties.length);
+    console.log('📄 Pages: agent-signup.html | signin.html | about.html');
+    console.log('🔗 Property cards now link to property-detail.html');
 });
