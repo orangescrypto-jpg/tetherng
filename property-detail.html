@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetherng - Property Details</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .detail-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: #1D4ED8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .property-detail-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
+        }
+
+        .property-header {
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%);
+            color: white;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .property-header h1 {
+            font-size: 1.75rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .status-available {
+            background: #10B981;
+            color: white;
+        }
+
+        .status-rented {
+            background: #ef4444;
+            color: white;
+        }
+
+        .property-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .property-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 1rem;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+        }
+
+        .property-info h2 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .property-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1D4ED8;
+            margin-bottom: 1rem;
+        }
+
+        .property-location {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .spec-item {
+            text-align: center;
+        }
+
+        .spec-value {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .spec-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .description {
+            margin: 1.5rem 0;
+        }
+
+        .description h3 {
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .description p {
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .agent-info {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .agent-info h3 {
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .agent-info p {
+            color: #6b7280;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-contact {
+            flex: 1;
+            background: #1D4ED8;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btn-contact:hover {
+            background: #1E3A8A;
+        }
+
+        .btn-save {
+            flex: 1;
+            background: #F59E0B;
+            color: #1f2937;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background: #D97706;
+        }
+
+        @media (max-width: 768px) {
+            .property-content {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+            .detail-wrapper {
+                padding: 1rem;
+            }
+            .property-header h1 {
+                font-size: 1.25rem;
+            }
+            .property-price {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🏠 Tether<span>ng</span></a>
+            <div class="nav-links">
+                <a href="index.html">Find Property</a>
+                <a href="agent-signup.html">List Property</a>
+                <a href="signin.html" class="btn-outline">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="detail-wrapper">
+        <a href="index.html" class="back-link">← Back to Properties</a>
+
+        <div class="property-detail-card" id="propertyDetail">
+            <!-- Content loaded by JavaScript -->
+            <div style="text-align: center; padding: 3rem;">
+                <p>Loading property details...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🏠 Tetherng</h3>
+                    <p>Trusted property rentals across Nigeria.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Find Property</a>
+                    <a href="agent-signup.html">List Property</a>
+                    <a href="about.html">About Us</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: hello@tetherng.com</p>
+                    <p>Phone: 0800-TETHERNG</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Tetherng.com - Securing rent across Nigeria</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Get property ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const propertyId = parseInt(urlParams.get('id'));
+        
+        // Get all properties from all agents
+        let allProperties = [];
+        
+        // Loop through localStorage to find all properties
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('tetherng_properties_')) {
+                const agentProperties = JSON.parse(localStorage.getItem(key));
+                if (Array.isArray(agentProperties)) {
+                    allProperties = allProperties.concat(agentProperties);
+                }
+            }
+        }
+        
+        // Sample properties if none exist
+        if (allProperties.length === 0) {
+            allProperties = [
+                {
+                    id: 1001,
+                    title: 'Modern 3-Bedroom Apartment',
+                    image: '🏠',
+                    price: '₦1,500,000/year',
+                    priceValue: 1500000,
+                    location: 'Lekki Phase 1, Lagos',
+                    status: 'available',
+                    bedrooms: 3,
+                    bathrooms: 2,
+                    size: '150m²',
+                    propertyType: 'apartment',
+                    description: 'Beautiful modern apartment with excellent finishes. Located in the heart of Lekki Phase 1, close to shops, restaurants, and schools. The apartment features spacious rooms, ample natural light, and secure parking.',
+                    agentName: 'Olu Adeyemi',
+                    agencyName: 'Adeyemi Properties Ltd',
+                    agentEmail: 'agent@example.com'
+                },
+                {
+                    id: 1002,
+                    title: 'Cozy 2-Bedroom Flat',
+                    image: '🏢',
+                    price: '₦800,000/year',
+                    priceValue: 800000,
+                    location: 'GRA, Ikeja, Lagos',
+                    status: 'available',
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    size: '100m²',
+                    propertyType: 'apartment',
+                    description: 'Comfortable 2-bedroom flat in a secure estate. 24/7 security, power backup, and water supply. Close to Ikeja City Mall and major transport links.',
+                    agentName: 'Olu Adeyemi',
+                    agencyName: 'Adeyemi Properties Ltd',
+                    agentEmail: 'agent@example.com'
+                }
+            ];
+        }
+        
+        // Find the property
+        const property = allProperties.find(p => p.id === propertyId);
+        
+        if (!property) {
+            document.getElementById('propertyDetail').innerHTML = `
+                <div style="text-align: center; padding: 3rem;">
+                    <h2>❌ Property Not Found</h2>
+                    <p>The property you're looking for doesn't exist or has been removed.</p>
+                    <a href="index.html" class="btn-contact" style="display: inline-block; margin-top: 1rem;">← Back to Home</a>
+                </div>
+            `;
+        } else {
+            // Display property details
+            document.getElementById('propertyDetail').innerHTML = `
+                <div class="property-header">
+                    <h1>${property.title}</h1>
+                    <span class="status-badge ${property.status === 'available' ? 'status-available' : 'status-rented'}">
+                        ${property.status === 'available' ? 'Available' : 'Rented'}
+                    </span>
+                </div>
+                
+                <div class="property-content">
+                    <div>
+                        <div class="property-image">${property.image}</div>
+                    </div>
+                    
+                    <div class="property-info">
+                        <div class="property-price">${property.price}</div>
+                        <div class="property-location">
+                            📍 ${property.location}
+                        </div>
+                        
+                        <div class="specs-grid">
+                            <div class="spec-item">
+                                <div class="spec-value">🛏️ ${property.bedrooms}</div>
+                                <div class="spec-label">Bedrooms</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">🛁 ${property.bathrooms}</div>
+                                <div class="spec-label">Bathrooms</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">📐 ${property.size}</div>
+                                <div class="spec-label">Size</div>
+                            </div>
+                        </div>
+                        
+                        <div class="description">
+                            <h3>Description</h3>
+                            <p>${property.description || 'No description provided.'}</p>
+                        </div>
+                        
+                        <div class="agent-info">
+                            <h3>Listed By</h3>
+                            <p><strong>${property.agentName || 'Verified Agent'}</strong></p>
+                            <p>${property.agencyName || 'Real Estate Agency'}</p>
+                            <p style="margin-top: 0.5rem;">✓ BVN/NIN Verified Agent</p>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn-contact" onclick="contactAgent('${property.agentEmail || 'hello@tetherng.com'}')">
+                                📞 Contact Agent
+                            </button>
+                            <button class="btn-save" onclick="saveProperty(${property.id})">
+                                ❤️ Save Property
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Contact agent function
+        window.contactAgent = function(email) {
+            alert(`📞 Contact Agent\n\nEmail: ${email}\nPhone: 0800-TETHERNG\n\nOur team will connect you with the agent within 24 hours.\n\n(Full messaging system coming soon!)`);
+        };
+        
+        // Save property function (for tenants)
+        window.saveProperty = function(id) {
+            let savedProperties = JSON.parse(localStorage.getItem('tetherng_saved_properties')) || [];
+            
+            if (!savedProperties.includes(id)) {
+                savedProperties.push(id);
+                localStorage.setItem('tetherng_saved_properties', JSON.stringify(savedProperties));
+                alert('❤️ Property saved to your favorites!');
+            } else {
+                alert('This property is already in your saved list.');
+            }
+        };
+    </script>
+</body>
+</html>
