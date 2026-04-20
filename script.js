@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'Enugu', 'Benin City', 'Abeokuta', 'Warri', 'Jos',
         'Kaduna', 'Maiduguri', 'Calabar', 'Uyo', 'Owerri',
         'Akure', 'Asaba', 'Sokoto', 'Bauchi', 'Yola',
-        'Lokoja', 'Minna', 'Makurdi', 'Katsina', 'Zaria', 'Ogun', 'Osun'
+        'Lokoja', 'Minna', 'Makurdi', 'Katsina', 'Zaria', 'Osun'
     ];
     
     // Display cities
